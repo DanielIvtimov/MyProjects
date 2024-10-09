@@ -1,0 +1,80 @@
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+.photo-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.photo-container img {
+    width: 100%;
+    height: auto;
+    max-width: max-content;
+}
+
+.main-container {
+    background: #F3F3F3;
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.main-mini-container {
+    width: 80%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-right: 100px;
+    padding-left: 100px;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-gap: 20px;
+}
+
+.first-column {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50px 10px;
+}
+
+.first-column span hr {
+    background-color: gold;
+    border: none;
+    height: 5px;
+    margin: 10px 0px;
+    width: 15%;
+}
+
+.second-column {
+    width: 100%;
+    height: auto;
+    padding: 20px; 
+}
+
+.photo-parts {
+    width: 100%;
+    height: auto;   
+    margin: 10px;
+    padding: 5px 30px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.photo-parts img {
+    width: 52%;
+    height: auto;
+    max-width: max-content;
+}
+

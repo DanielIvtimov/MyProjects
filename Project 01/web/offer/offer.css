@@ -1,0 +1,105 @@
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+.main-container {
+    background: #F3F3F3;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: auto;
+    justify-items: center;
+    margin-top: 10px;
+    padding: 20px 10px;
+}
+
+.text-container {
+    width: 70%;
+    height: 150px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap
+}
+
+.text-container h1 {
+    text-align: start;
+    font-size: 35   px;
+    font-weight: 600;
+    color: #33336B;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    position: relative;
+    top: -20px;
+    left: 10px;
+}
+
+.text-container span hr {
+    background-color: gold;
+    border: none;
+    height: 5px;
+    margin: 10px 0px;
+    width: 19%;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    top: -55px;
+    left: 15px;
+}
+
+.form-container {
+    width: 70%; 
+    margin: 0px 10px;
+    background-color: #f9f9f9; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 90%;
+}
+
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #d4a017; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+    align-self: center;
+}
+
+button:hover {
+    background-color: #b28814; 
+}
