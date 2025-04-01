@@ -1,10 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { UserContext } from '../../context/UserContext'
 import { getPollBookmarked } from '../../utils/helper';
 import "./styles/PollCard.css"
 import UserProfileInfo from '../cards/UserProfileInfo';
 import PollActions from './PollActions';
 import PollContent from './PollContent';
+import axiosInstance from '../../utils/axiosinstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import toast from 'react-hot-toast';
+import PollingResultContent from './PollingResultContent';
 
 const PollCard = ({
     pollId,
@@ -17,11 +21,12 @@ const PollCard = ({
     creatorName,
     creatorUsername,
     userHasVoted,
+    isMyPoll,
     isPollClosed,
     createdAt
 }) => {
 
-    const { user } = useContext(UserContext);
+    const { user, onUserVoted, toggleBookmarkId } = useContext(UserContext);
 
     const [selectedOptionsIndex, setSelectedOptionIndex] = useState(-1);
     const [rating, setRating] = useState(0);
@@ -47,6 +52,55 @@ const PollCard = ({
         else setSelectedOptionIndex(value);
     }
 
+    const getPostData = useCallback(() => {
+        if(type === "open-ended"){
+            return {responseText: userResponse, voterId: user._id};
+        };
+        if(type === "rating"){
+            return {optionIndex: rating - 1, voterId: user._id};
+        }
+        return {optionIndex: selectedOptionsIndex, voterId: user._id}
+    }, [type, userResponse, rating, selectedOptionsIndex, user])
+
+    const getPollDetail = async () => {
+        try{
+           const response = await axiosInstance.get(API_PATHS.POLLS.GET_BY_ID(pollId));
+           if(response.data){
+            const pollDetails = response.data;
+            setPollResult({
+                options: pollDetails.options || [],
+                voters: pollDetails.voters || 0,
+                responses: pollDetails.response || [],
+            });
+           } 
+        }catch(error){
+            console.error(error.response?.data?.message || "Error submiting vote");
+        }
+    }
+
+    const handleVoteSubmit = async () => {
+        try{
+           const response = await axiosInstance.post(API_PATHS.POLLS.VOTE(pollId), getPostData());
+           getPollDetail();
+           setIsVoteComplete(true);
+           onUserVoted();
+           toast.success("Vote submited successfully!"); 
+        }catch(error){
+         console.error(error.response?.data?.message || "Error submiting vote");   
+        }
+    }
+
+    const toggleBookmark = async () => {
+        try{
+           const response = await axiosInstance.post(API_PATHS.POLLS.BOOKMARK(pollId));
+            toggleBookmarkId(pollId);
+            setPollBookmarked((prev) => !prev);
+            toast.success(response.data.message);
+        }catch(error){
+            console.error(error.response?.data?.message || "Error bookmarking poll")
+        }
+    }
+
   return (
     !pollDeleted && (
         <div className="poll-card">
@@ -56,10 +110,10 @@ const PollCard = ({
                     pollId={pollId}
                     isVoteComplete={isVoteComplete}
                     inputCaptured={!!(userResponse || selectedOptionsIndex >= 0 || rating)}
-                    onVoteSubmit={() => {}}
+                    onVoteSubmit={handleVoteSubmit}
                     isBookmarked={pollBookmarked}
-                    toggleBookmark={() => {}}
-                    isMyPoll={() => {}}
+                    toggleBookmark={toggleBookmark}
+                    isMyPoll={isMyPoll}
                     pollClosed={pollClosed}
                     onClosePoll={() => {}}
                     onDelete={() => {}}
@@ -68,7 +122,15 @@ const PollCard = ({
             <div className="poll-card-question-container">
                 <p className="poll-card-question">{question}</p>
                 <div className="poll-card-question-divider">
-                    <PollContent 
+                    {isVoteComplete || isPollClosed ? (
+                        <PollingResultContent 
+                        type={type}
+                        options={pollResult.options || []}
+                        voters={pollResult.voters}
+                        responses={pollResult.responses || []}
+                        />
+                    ) : (
+                        <PollContent 
                         type={type}
                         options={options}
                         selectedOptionsIndex={selectedOptionsIndex}
@@ -78,6 +140,7 @@ const PollCard = ({
                         userResponse={userResponse}
                         onResponseChange={handleInput}
                     />
+                    )}
                 </div>
             </div>
         </div>

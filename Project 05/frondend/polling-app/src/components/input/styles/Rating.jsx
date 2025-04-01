@@ -12,7 +12,7 @@ const Rating = ({maxStars = 5, value = 0, onChange, readOnly = false}) => {
         }
     };
 
-    const handleMouseEnter = () => {
+    const handleMouseEnter = (rating) => {
         if(!readOnly){
             setHoverValue(rating);  
         }

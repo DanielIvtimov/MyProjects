@@ -8,7 +8,7 @@ import axiosInstance from '../../utils/axiosinstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import PollCard from '../../components/PollCards/PollCard';
 
-const PAGE_SIZE = 10; 
+const PAGE_SIZE = 5; 
 
 const Home = () => {
 
@@ -69,7 +69,7 @@ const Home = () => {
         type={poll.type} 
         options={poll.options} 
         voters={poll.voters || 0} 
-        response={poll.response || []} 
+        responses={poll.responses || []} 
         creatorProfileImg={poll.creator.profileImageUrl || null} 
         creatorName={poll.creator.fullName} 
         creatorUsername={poll.creator.username}
@@ -80,6 +80,7 @@ const Home = () => {
       ))}
     </DashboardLayout>
   )
+  
 }
 
 export default Home

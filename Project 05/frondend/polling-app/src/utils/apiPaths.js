@@ -10,13 +10,13 @@ export const API_PATHS = {
     POLLS: {    
         CRAETE: "/api/v1/poll/create",
         GET_ALL: "/api/v1/poll/getAllPolls",
-        GET_BY_ID: (pollId) => `/api/v1/poll${pollId}`,
-        VOTE: (pollId) => `/api/v1/poll${pollId}/vote`,
+        GET_BY_ID: (pollId) => `/api/v1/poll/${pollId}`,
+        VOTE: (pollId) => `/api/v1/poll/${pollId}/vote`,
         CLOSE: (pollId) => `/api/v1/poll/${pollId}/close`,
-        BOOKMARK: (pollId) => `/api/v1/poll${pollId}/bookmark`,
+        BOOKMARK: (pollId) => `/api/v1/poll/${pollId}/bookmark`,
         GET_BOOKMARKED: "/api/v1/poll/user/bookmarked",
         VOTED_POLLS: "/api/v1/poll/votedPolls",
-        DELETE: (pollId) => `/api/v1/poll${pollId}/delete`,
+        DELETE: (pollId) => `/api/v1/poll/${pollId}/delete`,
     },
     IMAGE: {
         UPLOAD_IMAGE: "/api/v1/auth/upload-image"

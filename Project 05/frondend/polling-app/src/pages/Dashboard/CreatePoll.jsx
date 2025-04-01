@@ -60,8 +60,7 @@ const CreatePoll = () => {
       case "single-choice":
         return pollData.options;
       case "image-based":
-        const options = await updateImageAndGetLink(pollData.imageOptions)
-        return;
+        return await updateImageAndGetLink(pollData.imageOptions)
       default: 
         return [];
     }
